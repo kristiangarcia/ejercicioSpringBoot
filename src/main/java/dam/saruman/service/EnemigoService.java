@@ -30,7 +30,7 @@ public class EnemigoService {
         return enemigoRepository.save(enemigo);
     }
 
-    public Enemigo actualizar(Long id, Enemigo enemigo){
+    public Enemigo actualizar(String id, Enemigo enemigo){
         if(enemigoRepository.existsById(id)){
             enemigo.setId(id);
             return enemigoRepository.save(enemigo);
@@ -38,7 +38,7 @@ public class EnemigoService {
         return null;
     }
 
-    public void eliminar(Long id){
+    public void eliminar(String id){
         enemigoRepository.deleteById(id);
     }
 }

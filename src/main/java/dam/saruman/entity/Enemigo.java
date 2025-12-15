@@ -1,40 +1,36 @@
 package dam.saruman.entity;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name="enemigo_estado")
+@Document(collection = "enemigos")
 public class Enemigo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
-    @Column
     private String nombre;
 
-    @Column
     private String pais;
 
-    @Column
     private String afiliacion_politica;
 
     public Enemigo() {
 
     }
 
-    public Enemigo(Long id, String nombre, String pais, String afiliacion_politica) {
+    public Enemigo(String id, String nombre, String pais, String afiliacion_politica) {
         this.id = id;
         this.nombre = nombre;
         this.pais = pais;
         this.afiliacion_politica = afiliacion_politica;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

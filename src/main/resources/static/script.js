@@ -29,8 +29,8 @@ function mostrarEnemigos(enemigos){
             <td>${enemigo.pais}</td>
             <td>${enemigo.afiliacion_politica}</td>
             <td>
-                <button class="btn-editar" onclick="editarEnemigo(${enemigo.id}, '${enemigo.nombre}', '${enemigo.pais}', '${enemigo.afiliacion_politica}')">Editar</button>
-                <button class="btn-eliminar" onclick="eliminarEnemigo(${enemigo.id})">Eliminar</button>
+                <button class="btn-editar" onclick="editarEnemigo('${enemigo.id}', '${enemigo.nombre}', '${enemigo.pais}', '${enemigo.afiliacion_politica}')">Editar</button>
+                <button class="btn-eliminar" onclick="eliminarEnemigo('${enemigo.id}')">Eliminar</button>
             </td>
         `
         tbody.appendChild(tr)
