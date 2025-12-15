@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Orda</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>
+        Lista de enemigos
+    </h1>
+    <table id="enemigosTable" style="display:none;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>País</th>
+                <th>Afiliación Política</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="enemigosBody"></tbody>
+    </table>
+
+    <div class="formulario-container">
+        <h2 id="formTitle">Agregar nuevo enemigo</h2>
+        <form id="formInsertarEnemigo">
+            <input type="hidden" id="enemigoId" name="id">
+            <div class="formGroup">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+            <div class="formGroup">
+                <label for="pais">País</label>
+                <input type="text" id="pais" name="pais" required>
+            </div>
+            <div class="formGroup">
+                <label for="afiliacion">Afiliación Política</label>
+                <input type="text" id="afiliacion" name="afiliacion" required>
+            </div>
+            <button type="submit" id="btnSubmit">Agregar Enemigo</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
