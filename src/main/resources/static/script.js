@@ -1,14 +1,70 @@
 document.addEventListener('DOMContentLoaded', cargarEnemigos)
 
+let enemigosActuales = []
+
 async function cargarEnemigos(){
     try{
         const response = await fetch('api/enemigo')
         const enemigos = await response.json()
+        enemigosActuales = enemigos
         mostrarEnemigos(enemigos)
     }catch(error){
         console.error("Error al cargar usuarios "+error)
     }// Fin catch
 }// Fin cargar enemigos
+
+async function ordenarAlfabeticamente(){
+    try{
+        const response = await fetch('api/enemigo/ordenado')
+        const enemigos = await response.json()
+        enemigosActuales = enemigos
+        mostrarEnemigos(enemigos)
+    }catch(error){
+        console.error("Error al ordenar "+error)
+    }
+}
+
+async function buscarPorNombre(){
+    const nombre = document.getElementById('buscarNombre').value.trim()
+    if(nombre === ''){
+        alert('Introduce un nombre para buscar')
+        return
+    }
+
+    try{
+        const response = await fetch(`api/enemigo/buscar?nombre=${encodeURIComponent(nombre)}`)
+        const enemigos = await response.json()
+        enemigosActuales = enemigos
+        mostrarEnemigos(enemigos)
+        if(enemigos.length === 0){
+            alert('No se encontraron enemigos con ese nombre')
+        }
+    }catch(error){
+        console.error("Error al buscar "+error)
+    }
+}
+
+function descargarCSV(){
+    if(enemigosActuales.length === 0){
+        alert('No hay datos para descargar')
+        return
+    }
+
+    const headers = ['ID', 'Nombre', 'Pais', 'Afiliacion_Politica']
+    const csvContent = [
+        headers.join(','),
+        ...enemigosActuales.map(e =>
+            `"${e.id}","${e.nombre}","${e.pais}","${e.afiliacion_politica}"`
+        )
+    ].join('\n')
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+    const link = document.createElement('a')
+    link.href = URL.createObjectURL(blob)
+    link.download = 'enemigos.csv'
+    link.click()
+    URL.revokeObjectURL(link.href)
+}
 
 function mostrarEnemigos(enemigos){
     const tbody = document.getElementById('enemigosBody')
@@ -18,6 +74,7 @@ function mostrarEnemigos(enemigos){
 
     if (enemigos.length === 0){
         console.log("no hay enemigos")
+        table.style.display = 'none'
         return
     }
 
@@ -74,6 +131,8 @@ async function insertarEnemigo(event) {
             })
         })
 
+        const data = await response.json()
+
         if(response.ok){
             alert(isUpdate ? 'Enemigo actualizado con éxito' : 'Enemigo agregado con éxito')
             document.getElementById('formInsertarEnemigo').reset()
@@ -81,9 +140,7 @@ async function insertarEnemigo(event) {
             document.getElementById('formTitle').textContent = 'Agregar nuevo enemigo'
             await cargarEnemigos()
         }else{
-            const error = await response.text()
-            console.log(error)
-            alert('Error al guardar enemigo')
+            alert(data.error || 'Error al guardar enemigo')
         }
     }catch(error){
         console.error(error)
@@ -115,11 +172,13 @@ async function eliminarEnemigo(id){
             method: 'DELETE'
         })
 
+        const data = await response.json()
+
         if(response.ok){
-            alert('Enemigo eliminado con éxito')
+            alert(data.mensaje || 'Enemigo eliminado con éxito')
             await cargarEnemigos()
         }else{
-            alert('Error al eliminar enemigo')
+            alert(data.error || 'Error al eliminar enemigo')
         }
     }catch(error){
         console.error('Error al eliminar:', error)

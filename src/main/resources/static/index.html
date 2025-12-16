@@ -10,6 +10,19 @@
     <h1>
         Lista de enemigos
     </h1>
+
+    <div class="acciones-tabla">
+        <div class="busqueda">
+            <input type="text" id="buscarNombre" placeholder="Buscar por nombre...">
+            <button onclick="buscarPorNombre()">Buscar</button>
+            <button onclick="cargarEnemigos()">Mostrar todos</button>
+        </div>
+        <div class="botones-extra">
+            <button onclick="ordenarAlfabeticamente()">Ordenar A-Z</button>
+            <button onclick="descargarCSV()">Descargar CSV</button>
+        </div>
+    </div>
+
     <table id="enemigosTable" style="display:none;">
         <thead>
             <tr>
@@ -28,8 +41,8 @@
         <form id="formInsertarEnemigo">
             <input type="hidden" id="enemigoId" name="id">
             <div class="formGroup">
-                <label for="nombre">Nombre</label>
-                <input type="text" id="nombre" name="nombre" required>
+                <label for="nombre">Nombre (mínimo 3 caracteres)</label>
+                <input type="text" id="nombre" name="nombre" required minlength="3">
             </div>
             <div class="formGroup">
                 <label for="pais">País</label>
